@@ -105,7 +105,7 @@ public class Project2 {
         System.out.println("-----------------------------------------------------------------------------------");
         //2.iv        
         Matrix x4 = new Matrix(new double [][]
-            	{{11.63333,-25.13333,12.5,3.6},
+            	{{-4.36666,17,-10.43333,-2.8},
             	{1,0,0,0},
             	{0,1,0,0},
             	{0,0,1,0}});	
@@ -130,7 +130,7 @@ public class Project2 {
         System.out.println("-----");
         
         Matrix x2 = new Matrix(new double [][]
-            	{{1.3,0.3},
+            	{{1.13333,0.26666},
             	{1,0}});	
         
         ArrayList<Double> x2_coeff = a1.leverrier(x2);
