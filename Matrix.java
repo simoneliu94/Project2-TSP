@@ -1,6 +1,13 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections; 
+import java.util.Collections;
+import java.util.Scanner; 
 
 /**
  * 
@@ -11,13 +18,26 @@ import java.util.Collections;
 public class Matrix {
     private int numRows = 0;
     private int numCols = 0;
-    private double matrix[][];
+    public double matrix[][];
     
 /**
  * 
  */
     public Matrix() {
     	
+    }
+    
+    public Matrix (Matrix A) {
+    	this.numRows = A.matrix.length;
+        this.numCols = A.matrix[0].length;
+        this.matrix = new double[numRows][numCols];
+        for (int i=0; i<numRows; i++)
+        {
+            for (int j=0; j<numCols; j++)
+            {
+                this.matrix[i][j] = A.matrix[i][j];
+            }
+        }   
     }
 /**
  * Represents a matrix in 2 dimensions
@@ -47,6 +67,43 @@ public class Matrix {
         this.numCols = cols;
         this.matrix = new double[numRows][numCols];
     }
+    
+    
+    public Matrix(int columns, String filepath) throws FileNotFoundException, IOException{
+		this.numCols = columns;
+		int fileRows = 0;
+		File file = new File(filepath);
+		
+		Scanner rowCounter = new Scanner(file);
+		
+		while(rowCounter.hasNextLine()){
+			rowCounter.nextLine();
+			fileRows ++;
+		}
+		
+		this.numRows = fileRows - 1;
+		
+		//cmatrix = new Complex[this.rows];
+		
+		this.matrix = new double[numRows][numCols];
+		
+		FileReader is = new FileReader(filepath);
+		BufferedReader br = new BufferedReader(is);
+		
+
+		br.readLine();
+
+		
+		for (int r = 0; r < numRows; r++){
+			String[] tempString = br.readLine().split("\\s+");
+			
+			
+			for(int c = 0; c < numCols; c++){
+				matrix[r][c] = Double.parseDouble(tempString[c]);
+			}
+		}
+		
+	}
     
 
 /**
@@ -765,6 +822,23 @@ public class Matrix {
     	return e1;
     	
     }
+
+    
+/**
+ *     
+ * @param cities
+ * @return
+ */
+    public Matrix find_distanceMatrix(ArrayList<City> cities) {
+		Matrix matrixA = new Matrix(cities.size(),cities.size());
+		for (int i = 0; i<cities.size(); i++) {
+			for (int j = 0; j<cities.size(); j++) {
+				double dis = cities.get(i).distance(cities.get(i),cities.get(j));
+				matrixA.matrix[i][j] = dis;
+			}			
+		}		
+		return matrixA;		
+	}
     
     
     
