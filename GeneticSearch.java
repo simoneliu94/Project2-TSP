@@ -17,19 +17,23 @@ public class GeneticSearch {
 	private static List<City> maxTrip;
 	private static double counter = 1;
 	private static List<City> offspringList;
-	private static double offSpring = 20;
+	private static List<City> bestSolution;
+	private static ArrayList<List<City>> bestList = new ArrayList<>();
+	private static double offSpringDist = 20;
+	private static double bestDist = 3.6;
 	private static City aCity = new City();		
-	private static int popSize = 50;
+	private static int popSize = 5;
+	private static int count = 0;
+	private static double good = 3.6;
 	private static Histogram H;
 	
 	
 	public static void search(List<City> cities, int iter, double temp_max, double temp_min) throws FileNotFoundException, UnsupportedEncodingException {
 		H = new Histogram(temp_max, temp_min, 100);
 		population = population(cities, popSize);
-		//System.out.println(population);
-		int count = 0;
-		while (count<iter) {
-			offSpring = 20;
+
+		while (count < 50) {
+			offSpringDist = 20;
 			offspringList = cities;
 			
 			List<City> mutationList = new ArrayList<>();
@@ -46,24 +50,21 @@ public class GeneticSearch {
 					mutationList.add(minTrip.get(0));
 					for (int p = 5; p < 10; p++) {
 						mutationList.add(minTrip.get(p));
-						//System.out.println(mutationList);
 					}
 					for (int p = 0; p < cities.size(); p++) {
 						if (mutationList.contains(offspringList.get(p)) == false){
 							mutationList.add(offspringList.get(p));
-							//System.out.println(mutationList);
 						}
 					}
 					
 					cities = mutationList;
-					//System.out.println(cities);
 					population.remove(0);
 					population.add(mutationList);
 				}
 			}			
-			H.setTripLength(tripLength);
+
+			H.setTripLength(bestDist);
 			
-			count++;
 		}
 		printResult();
 	}
@@ -80,7 +81,6 @@ public class GeneticSearch {
 			}
 		}
 		cities = mutationList;
-		//System.out.println(cities);
 		population.remove(0);
 		population.add(mutationList);
 	}
@@ -120,10 +120,25 @@ public class GeneticSearch {
 					minTrip = minList;
 				} 
 				
-				else if (tripLength < offSpring) {
-					offSpring = tripLength;
+				else if (tripLength < offSpringDist) {
+					offSpringDist = tripLength;
 					List<City> parentList = new ArrayList<>(population.get(index));
 					offspringList = parentList;
+				}
+				
+				if (tripLength <= 4) {
+					bestDist = tripLength;
+					List<City> whatever = new ArrayList<>(population.get(index));
+					
+					if(bestList.contains(whatever) == false) {				
+						bestSolution = new ArrayList<>(population.get(index));
+						System.out.println ((count+1) + " " +bestSolution);
+						System.out.println ("Distance " +bestDist);
+						System.out.println ();
+						count++;
+					}
+					
+					bestList.add(whatever);
 				}
 
 				if (tripLength > max) {
@@ -138,10 +153,10 @@ public class GeneticSearch {
 	}
 	
 	public static void printResult() throws FileNotFoundException, UnsupportedEncodingException {
-		System.out.println("****Result written to a text file****");
+		/*System.out.println("****Result written to a text file****");
 		System.out.println();
 		PrintStream fileStream = new PrintStream("GeneticSearch.txt");
-		System.setOut(fileStream);
+		System.setOut(fileStream);*/
 		
 		double mean = sum / counter;
 		double std = Math.sqrt((sumSquares - Math.pow(mean, 2) * (counter)) / ((counter) - 1));

@@ -9,8 +9,11 @@ public class SASearch {
 	static int last = 0;
 	static double max = 0;
 	static double min = 14.5;
-	private static List<City> minDistance;
-	private static List<City> maxDistance;
+	private static List<City> minTrip;
+	private static List<City> maxTrip;
+	private static List<City> bestSolution;
+	private static double bestDist = 3.6;
+	private static int count = 0;
 	private static double sum = 0;
 	private static double sumSquares = 0;
 	private static List<City> currentCity;
@@ -23,10 +26,10 @@ public class SASearch {
 	static void search(List<City> cities, double temperature, double temp_max, double temp_min) throws FileNotFoundException, UnsupportedEncodingException {
 		H = new Histogram(temp_max, temp_min, 100);
 		
-		double coolDownRate = 0.003;
+		double coolDownRate = 0.000001;
 		currentCity = cities;
 		
-		while (temperature > 1) {
+		while (count<50) {
 			tripLength = 0;
 			generateMatrix(cities);
 
@@ -46,17 +49,37 @@ public class SASearch {
 					sum2 += aCity.distance(nextCity.get(i),nextCity.get(0));
 				}
 			}
-			
-			if (SASearch.find_probability(tripLength, sum2, temperature) > Math.random()) {
+
+			if (SASearch.find_prob(tripLength, sum2, temperature) > Math.random()) {
 				currentCity = nextCity;
 				if (sum2 < min) {
 					min = sum2;
-					minDistance = nextCity;
+					minTrip = nextCity;
+					
 				}
-			} else if (tripLength < min) {
+				
+				if (sum2 <= 4.7) {
+					bestDist = sum2;				
+					bestSolution = nextCity;
+					
+					System.out.println ((count+1) + " " +bestSolution);
+					System.out.println ("Distance " +bestDist);
+					System.out.println ();
+					count++;
+					
+				}
+				
+				
+			} 
+			
+			else if (tripLength < min) {
 				min = tripLength;
-				minDistance = currentCity;
+				minTrip = currentCity;
+				System.out.println ("Distance " +min);
 			}
+			
+			H.setTripLength(bestDist);
+
 			counter++;
 			temperature *= 1 - coolDownRate;
 		}
@@ -78,36 +101,36 @@ public class SASearch {
 				if (tripLength > max) {
 					max = tripLength;
 					List<City> maxList= new ArrayList<>(cities);
-					maxDistance = maxList;
+					maxTrip = maxList;
 				}
-				H.setTripLength(tripLength);
+				
 			}
 		}
 	}
 	public static void printResult() throws FileNotFoundException, UnsupportedEncodingException {
-		System.out.println("****Result written to a text file****");
+		/*System.out.println("****Result written to a text file****");
 		System.out.println();
 		PrintStream fileStream = new PrintStream("SASearch.txt");
-		System.setOut(fileStream);
+		System.setOut(fileStream);*/
 		
 		double mean = sum/counter;
 		double std = Math.sqrt((sumSquares-Math.pow(mean, 2) *counter)/(counter-1));
 		
 		System.out.println("Mean: " + mean);
 		System.out.println("Standard Deviation: " + std);
-		System.out.println("Shortest Route: " + minDistance);
+		System.out.println("Shortest Route: " + minTrip);
 		System.out.println("Shortest distance: " + min);
-		System.out.println("Longest Route: " + maxDistance);
+		System.out.println("Longest Route: " + maxTrip);
 		System.out.println("Longest distance: " + max);
 		
 		last = (int) counter;
 		H.printHistogram();
 	}
 
-	public static double find_probability(double temp, double newTemp, double temperature) {
+	public static double find_prob(double temp, double newTemp, double temperature) {
 		if (newTemp < temp) {
 			double prob = temperature/(1+Math.log(1+temperature));			
-			return prob;
+			return 0.8;
 		}
 		return Math.exp((temp - newTemp) / temperature);
 	}

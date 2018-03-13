@@ -13,12 +13,12 @@ public class TravelingSalesman {
 	public static int option;
 	public static double temp_max;
 	public static double temp_min;
-	
-	
+			
 	@SuppressWarnings("resource")
-	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {	
+	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {			
 		TravelingSalesman tsp = new TravelingSalesman();
-		tsp.readIn();
+		
+		tsp.readIn();		
 		tsp.find_tempMaxMin(distanceMatrix,cities.size());
 		
 		System.out.println("Choose an algorithm:");
@@ -55,7 +55,7 @@ public class TravelingSalesman {
 		if (option == 3) {
 			System.out.println("\n" +"Genetic Algorithm Search......"+ "\n");
 			long startTime = System.currentTimeMillis();			
-			GeneticSearch.search(cities, 1000000, temp_max, temp_min);
+			GeneticSearch.search(cities, 50, temp_max, temp_min);
 			long endTime   = System.currentTimeMillis();
 			long totalTime = endTime - startTime;
 			System.out.println("\n" +  "Runtime: " +totalTime + " milliseconds");
@@ -65,7 +65,7 @@ public class TravelingSalesman {
 		if (option == 4) {
 			System.out.println("\n" +"Simulated Annealing Search......"+ "\n");
 			long startTime = System.currentTimeMillis();
-			SASearch.search(cities, 1000000, temp_max, temp_min);
+			SASearch.search(cities, 1000, temp_max, temp_min);
 			long endTime   = System.currentTimeMillis();
 			long totalTime = endTime - startTime;
 			System.out.println("\n" +  "Runtime: " +totalTime + " milliseconds");
@@ -110,7 +110,8 @@ public class TravelingSalesman {
 		fileReader.close();	
 		
 		distanceMatrix = mat.find_distanceMatrix(cities);
-		System.out.println(distanceMatrix);			
+		System.out.println(distanceMatrix);		
+
 	}
 	
 	public void find_tempMaxMin(Matrix distanceMat, int numCity) {
@@ -130,5 +131,6 @@ public class TravelingSalesman {
 		temp_max = temp_max*numCity;
 		temp_min = temp_min*numCity;
 	}
+	
 	
 }
