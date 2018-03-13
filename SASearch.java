@@ -33,43 +33,26 @@ public class SASearch {
 			tripLength = 0;
 			generateMatrix(cities);
 
-			List<City> nextCity = new ArrayList<City>(cities);
-			for (int i = 3; i < 12; i++) {
-				int index = (int) (nextCity.size() * Math.random());
-				int index2 = (int) (nextCity.size() * Math.random());
-				Collections.swap(nextCity, index, index2);
-			}
+			mutate(cities);
+			
 
-			double sum2 = 0;
-			for (int i = 0; i <= nextCity.size() - 1; i++) {
-				if (i < nextCity.size() - 1) {
-					sum2 += aCity.distance(nextCity.get(i),nextCity.get(i + 1));
-				} 
-				else {
-					sum2 += aCity.distance(nextCity.get(i),nextCity.get(0));
-				}
-			}
-
-			if (SASearch.find_prob(tripLength, sum2, temperature) > Math.random()) {
+			if (SASearch.find_prob(tripLength, neighborSum, temperature) > Math.random()) {
 				currentCity = nextCity;
-				if (sum2 < min) {
-					min = sum2;
+				if (neighborSum < min) {
+					min = neighborSum;
 					minTrip = nextCity;
 					
 				}
 				
-				if (sum2 <= 4.7) {
-					bestDist = sum2;				
+				if (neighborSum <= 4.7) {
+					bestDist = neighborSum;				
 					bestSolution = nextCity;
 					
 					System.out.println ((count+1) + " " +bestSolution);
 					System.out.println ("Distance " +bestDist);
 					System.out.println ();
-					count++;
-					
-				}
-				
-				
+					count++;					
+				}				
 			} 
 			
 			else if (tripLength < min) {
@@ -85,6 +68,25 @@ public class SASearch {
 		}
 		printResult();
 		
+	}
+	
+	public static void mutate(List<City> cities){
+		List<City> nextCity = new ArrayList<City>(cities);
+		for (int i = 3; i < 12; i++) {
+			int index = (int) (nextCity.size() * Math.random());
+			int index2 = (int) (nextCity.size() * Math.random());
+			Collections.swap(nextCity, index, index2);
+		}
+		
+		double neighborSum = 0;
+		for (int i = 0; i <= nextCity.size() - 1; i++) {
+			if (i < nextCity.size() - 1) {
+				neighborSum += aCity.distance(nextCity.get(i),nextCity.get(i + 1));
+			} 
+			else {
+				neighborSum += aCity.distance(nextCity.get(i),nextCity.get(0));
+			}
+		}
 	}
 	
 	public static void generateMatrix(List<City> cities) {
