@@ -16,27 +16,36 @@ public class GeneticSearch {
 	private static double max = 0;
 	private static List<City> maxTrip;
 	private static double counter = 1;
-	private static List<City> offspringList;
+	private static List<City> parent1List;
+	private static List<City> parent2List;
 	private static List<City> bestSolution;
 	private static ArrayList<List<City>> bestList = new ArrayList<>();
-	private static double offSpringDist = 20;
-	private static double bestDist = 3.6;
+	private static double parent1_distance = 20;
+	private static double parent2_distance = 20;
+	private static double offspring_distance = 20;
+	private static double bestDist = 20;
 	private static City aCity = new City();		
-	private static int popSize = 5;
+	private static int popSize = 1000000;
 	private static int count = 0;
-	private static double good = 3.6;
+	private static int run = 50;
 	private static Histogram H;
 	
 	
-	public static void search(List<City> cities, int iter, double temp_max, double temp_min) throws FileNotFoundException, UnsupportedEncodingException {
+	public static void search(List<City> cities, double temp_max, double temp_min) throws FileNotFoundException, UnsupportedEncodingException {
 		H = new Histogram(temp_max, temp_min, 100);
-		population = population(cities, popSize);
-
-		while (count < 50) {
-			offSpringDist = 20;
-			offspringList = cities;
+		population = population(cities, popSize);		
+		
+		
+		while (count < run) {
+			parent1_distance = 20;
+			parent1List = cities;
 			
-			List<City> mutationList = new ArrayList<>();
+			Random rand = new Random();
+			int index = rand.nextInt(population.size()-1);
+			parent2List = population.get(index);
+			parent2_distance = totalDistance(parent2List);			
+			
+			List<City> offspringList = new ArrayList<>();
 			
 			mutate();
 			
@@ -44,45 +53,29 @@ public class GeneticSearch {
 				tripLength = 0;
 				generateDistance(cities,i);
 
-				if (i == population.size() - 1) {
-					//crossOver(cities, mutationList);
+				if (i == population.size() - 1) {					
 					
-					mutationList.add(minTrip.get(0));
-					for (int p = 5; p < 10; p++) {
-						mutationList.add(minTrip.get(p));
-					}
-					for (int p = 0; p < cities.size(); p++) {
-						if (mutationList.contains(offspringList.get(p)) == false){
-							mutationList.add(offspringList.get(p));
-						}
-					}
+					offspringList = crossOver(minTrip, parent2List);
 					
-					cities = mutationList;
+					cities = offspringList;
 					population.remove(0);
-					population.add(mutationList);
-				}
-			}			
+					population.add(offspringList);
+				}				
+			}
+			
+			if(bestList.contains(minTrip) == false && bestList.size()<=run) {				
+				bestDist = min;
+				bestList.add(minTrip);
+				count++;						
+			}	
 
 			H.setTripLength(bestDist);
+			System.out.println(count);
 			
 		}
+		
+		
 		printResult();
-	}
-	
-	public static void crossOver(List<City> cities, List<City> mutationList) {		
-		for (int p = 0; p < 6; p++) {
-			mutationList.add(minTrip.get(p));
-			System.out.println(mutationList);
-		}
-		for (int p = 0; p < cities.size(); p++) {
-			if (mutationList.contains(offspringList.get(p)) == false){
-				mutationList.add(offspringList.get(p));
-				System.out.println(mutationList);
-			}
-		}
-		cities = mutationList;
-		population.remove(0);
-		population.add(mutationList);
 	}
 	
 	public static ArrayList<List<City>> population (List<City> cities, int popSize){
@@ -93,15 +86,6 @@ public class GeneticSearch {
 			populationCity.add(tempCity);			
 		}			
 		return populationCity;		
-	}
-	
-	public static void mutate() {
-		for (int i = 0; i <= population.size() - 1; i++) {
-				Random rand = new Random();
-				int ind = rand.nextInt(population.get(i).size());
-				int ind2 = rand.nextInt(population.get(i).size());
-				Collections.swap(population.get(i), ind, ind2);			
-		}
 	}
 	
 	public static void generateDistance(List<City> cities, int index) {
@@ -120,37 +104,66 @@ public class GeneticSearch {
 					minTrip = minList;
 				} 
 				
-				else if (tripLength < offSpringDist) {
-					offSpringDist = tripLength;
+				else if (tripLength < parent1_distance) {
+					parent1_distance = tripLength;
 					List<City> parentList = new ArrayList<>(population.get(index));
-					offspringList = parentList;
-				}
-				
-				if (tripLength <= 4) {
-					bestDist = tripLength;
-					List<City> whatever = new ArrayList<>(population.get(index));
+					parent1List = parentList;
 					
-					if(bestList.contains(whatever) == false) {				
-						bestSolution = new ArrayList<>(population.get(index));
-						System.out.println ((count+1) + " " +bestSolution);
-						System.out.println ("Distance " +bestDist);
-						System.out.println ();
-						count++;
-					}
-					
-					bestList.add(whatever);
 				}
-
-				if (tripLength > max) {
-					max = tripLength;
-					List<City> maxList = new ArrayList<>(population.get(index));
-					maxTrip = maxList;
+								
+				if (tripLength <= 4 && bestList.size()<=run) {
+					
+					List<City> currentCity = new ArrayList<>(population.get(index));
+					
+					if(bestList.contains(currentCity) == false) {				
+						bestList.add(currentCity);
+						bestDist = tripLength;
+						count++;						
+					}					
 				}
 				 
 				counter += 1;
-			}
-		}
+			}			
+			
+		}		
 	}
+
+	
+	public static double totalDistance(List<City> cityList) {
+		double total = 0;
+		for (int i =0; i<cityList.size()-1; i++) {
+			total += aCity.distance(cityList.get(i), cityList.get(i+1));
+		}
+		total = total + aCity.distance(cityList.get(cityList.size()-1), cityList.get(0));
+		return total;
+	}
+	
+	public static List<City> crossOver(List<City> parent1, List<City> parent2){
+		List<City> child = new ArrayList<>();
+		for (int i = 0; i<7; i++) {
+			child.add(parent1.get(i));
+		}
+		for (int i = 0; i < parent2.size(); i++) {
+			if (child.contains(parent2.get(i)) == false) {
+				child.add(parent2.get(i));
+			}
+		}		
+		return child;
+	}
+	
+	
+	
+	public static void mutate() {
+		for (int i = 0; i <= population.size() - 1; i++) {
+				Random rand = new Random();
+				int ind = rand.nextInt(population.get(i).size());
+				int ind2 = rand.nextInt(population.get(i).size());
+				Collections.swap(population.get(i), ind, ind2);			
+		}
+	}	
+	
+	
+	
 	
 	public static void printResult() throws FileNotFoundException, UnsupportedEncodingException {
 		/*System.out.println("****Result written to a text file****");
@@ -158,16 +171,52 @@ public class GeneticSearch {
 		PrintStream fileStream = new PrintStream("GeneticSearch.txt");
 		System.setOut(fileStream);*/
 		
-		double mean = sum / counter;
-		double std = Math.sqrt((sumSquares - Math.pow(mean, 2) * (counter)) / ((counter) - 1));
+		for (int i = 0; i<bestList.size(); i++) {
+			System.out.println((i+1) + " " + bestList.get(i) + " " + totalDistance(bestList.get(i)));
+		}
 		
+		double sum = 0;
+		double sumSquare = 0;
+		double temp_std = 0;
+		
+		for (int i=0; i<bestList.size(); i++) {
+			sum = sum + totalDistance(bestList.get(i));
+			sumSquare = sumSquare + (sum*sum);			
+		}
+		
+		double mean = sum/bestList.size();
+		
+		for (int i=0; i<bestList.size(); i++) {
+			temp_std += Math.pow(totalDistance(bestList.get(i)) - mean, 2);	
+		}		
+		
+		double std = Math.sqrt(temp_std/bestList.size());
+
+		double min = 14.5;
+		List<City> minTrip = null;
+		double max = 0;
+		List<City> maxTrip = null;
+		
+		for (int i=0; i<bestList.size(); i++) {
+			double dis = totalDistance(bestList.get(i));
+			if (min > dis) {
+				min = dis;
+				minTrip = bestList.get(i);
+			}
+			if (max < dis) {
+				max = dis;
+				maxTrip = bestList.get(i);
+			}
+		}
+		
+		System.out.println();	
 		System.out.println("Mean: " + mean);
 		System.out.println("Standard Deviation: " + std);
 		System.out.println("Shortest Route: " + minTrip);
 		System.out.println("Shortest distance: " + min);
 		System.out.println("Longest Route: "+ maxTrip);
 		System.out.println("Longest distance: " + max);	
-		System.out.println();
+		System.out.println();		
 		
 		H.printHistogram();
 	}

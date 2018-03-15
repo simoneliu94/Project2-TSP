@@ -55,7 +55,7 @@ public class TravelingSalesman {
 		if (option == 3) {
 			System.out.println("\n" +"Genetic Algorithm Search......"+ "\n");
 			long startTime = System.currentTimeMillis();			
-			GeneticSearch.search(cities, 50, temp_max, temp_min);
+			GeneticSearch.search(cities, temp_max, temp_min);
 			long endTime   = System.currentTimeMillis();
 			long totalTime = endTime - startTime;
 			System.out.println("\n" +  "Runtime: " +totalTime + " milliseconds");
@@ -65,7 +65,7 @@ public class TravelingSalesman {
 		if (option == 4) {
 			System.out.println("\n" +"Simulated Annealing Search......"+ "\n");
 			long startTime = System.currentTimeMillis();
-			SASearch.search(cities, 1000, temp_max, temp_min);
+			SASearch.search(cities, 100000, temp_max, temp_min);
 			long endTime   = System.currentTimeMillis();
 			long totalTime = endTime - startTime;
 			System.out.println("\n" +  "Runtime: " +totalTime + " milliseconds");

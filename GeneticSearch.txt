@@ -1,159 +1,60 @@
-1 [G , E , F , A , N , D , B , H , K , I , L , M , C , J ]
-Distance 3.9000821212507617
+1 [D , H , K , I , L , C , J , G , M , F , N , A , E , B ] 4.3244338492254695
+2 [I , M , J , C , G , E , F , A , N , D , B , H , L , K ] 4.280471425993503
+3 [G , J , C , M , I , K , H , B , D , L , N , E , F , A ] 4.247783778977984
+4 [K , H , B , D , N , A , E , F , M , G , C , J , L , I ] 4.164052465892577
+5 [M , G , J , C , I , L , K , B , H , D , N , E , F , A ] 3.974718269650056
+6 [A , J , G , C , M , L , I , K , B , H , D , N , E , F ] 3.993253489453749
+7 [C , A , N , F , E , D , B , H , K , I , L , M , G , J ] 3.9884810725378466
+8 [L , I , M , C , J , G , A , E , F , N , D , H , B , K ] 3.9490170688385127
+9 [M , A , E , F , N , D , H , B , L , K , I , C , J , G ] 3.99785550562089
+10 [M , C , J , G , A , E , N , F , D , B , H , K , I , L ] 3.9440415150529775
+11 [G , J , C , M , I , K , L , B , H , D , E , F , N , A ] 3.9643628842518384
+12 [F , E , N , D , B , H , I , K , L , M , C , J , G , A ] 3.8850793925696268
+13 [C , I , K , L , B , H , D , N , E , F , A , M , G , J ] 3.9626361736546185
+14 [I , L , C , J , M , G , A , N , F , E , D , B , H , K ] 3.989252369847149
+15 [M , A , F , E , N , D , B , H , K , I , L , G , J , C ] 3.9537885554353154
+16 [B , K , I , L , M , C , J , G , A , F , E , N , D , H ] 3.7167858994441643
+17 [G , C , J , A , F , E , N , D , B , H , K , I , L , M ] 3.984591628063763
+18 [E , F , A , M , C , J , G , L , I , K , B , H , D , N ] 3.9811673325378063
+19 [K , L , I , M , C , J , G , A , F , E , N , D , H , B ] 3.913797736872241
+20 [I , L , M , C , J , G , A , N , E , F , D , H , B , K ] 3.8517681732460605
+21 [D , N , E , F , A , C , J , G , M , L , I , K , B , H ] 3.953212606265302
+22 [A , G , J , M , C , L , I , K , H , B , D , N , E , F ] 3.9078882107596087
+23 [A , M , G , J , C , L , I , K , H , B , D , F , E , N ] 3.996392419678543
+24 [H , B , D , N , F , E , A , M , C , J , G , L , I , K ] 3.9890078874015877
+25 [C , J , G , A , F , E , N , B , D , H , K , I , L , M ] 3.9904076666758064
+26 [M , I , L , K , H , B , D , E , F , N , A , G , J , C ] 3.9490662031447856
+27 [G , L , I , K , B , H , D , N , E , F , A , M , C , J ] 3.9811673325378067
+28 [J , M , L , I , K , B , H , D , E , N , F , A , G , C ] 3.9906905672486794
+29 [E , D , H , B , K , I , L , M , J , C , G , A , F , N ] 3.99069056724868
+30 [J , G , A , F , E , N , D , H , B , L , K , I , M , C ] 3.9017156408768034
+31 [B , D , N , E , F , A , G , M , J , C , L , I , K , H ] 3.926605126472114
+32 [A , E , F , N , D , H , B , K , I , L , M , C , J , G ] 3.752005231410436
+33 [K , I , L , C , M , J , G , A , N , F , E , D , H , B ] 3.997914231237134
+34 [D , N , F , E , A , M , G , J , C , I , K , L , B , H ] 3.99785550562089
+35 [E , N , D , H , B , K , I , L , C , G , J , M , A , F ] 3.996896644752977
+36 [K , B , H , D , N , E , F , A , M , G , J , C , I , L ] 3.9747182696500554
+37 [B , H , D , F , E , N , A , G , C , J , M , L , I , K ] 3.9785928107324064
+38 [E , F , N , D , H , B , K , I , L , M , C , J , G , A ] 3.752005231410436
+39 [A , N , D , H , B , K , I , L , M , C , J , G , E , F ] 3.927460898353253
+40 [I , C , M , J , G , A , F , E , N , D , B , H , K , L ] 3.993817557430527
+41 [B , H , K , I , L , M , J , C , G , A , N , E , F , D ] 3.951214033629915
+42 [I , C , J , G , M , E , F , A , N , D , B , H , K , L ] 3.992158697723975
+43 [H , K , L , I , C , J , G , M , A , E , F , N , D , B ] 3.982558824513837
+44 [H , K , I , L , M , J , C , G , A , N , F , E , D , B ] 3.8788790032030525
+45 [L , G , J , C , M , A , F , E , N , D , H , B , K , I ] 3.9811673325378063
+46 [J , G , A , E , F , N , D , H , B , K , I , L , M , C ] 3.7520052314104353
+47 [C , G , A , E , F , N , D , H , B , K , I , L , M , J ] 3.878829868896781
+48 [G , J , C , A , E , F , N , D , H , B , K , I , L , M ] 3.988431938231574
+49 [I , K , L , H , B , D , N , F , E , A , G , J , C , M ] 3.9781911215643415
+50 [C , L , I , K , B , H , D , N , E , F , A , G , J , M ] 3.9352669878621
 
-2 [N , D , B , H , K , I , L , C , J , M , G , A , E , F ]
-Distance 3.961824458438387
-
-3 [N , D , B , H , K , I , L , C , J , G , M , F , E , A ]
-Distance 3.984130039189081
-
-4 [N , D , B , H , K , I , L , M , C , J , G , A , E , F ]
-Distance 3.724626454307945
-
-5 [K , I , L , M , C , J , G , A , F , N , E , D , B , H ]
-Distance 3.836487152659843
-
-6 [K , I , L , M , C , J , G , A , N , F , E , D , B , H ]
-Distance 3.752054365716708
-
-7 [K , I , L , M , C , J , G , A , N , F , E , B , D , H ]
-Distance 3.945278145434927
-
-8 [K , I , L , M , C , J , G , A , F , E , N , D , H , B ]
-Distance 3.7167858994441634
-
-9 [J , M , G , A , F , E , N , D , B , H , K , I , L , C ]
-Distance 3.926605126472114
-
-10 [M , J , G , A , F , E , N , D , B , H , K , L , I , C ]
-Distance 3.9938175574305266
-
-11 [C , J , G , A , F , E , N , D , H , B , I , K , L , M ]
-Distance 3.896039307592061
-
-12 [C , J , G , A , F , E , N , B , D , H , K , I , L , M ]
-Distance 3.9904076666758064
-
-13 [C , J , G , A , F , E , N , D , B , H , K , L , I , M ]
-Distance 3.8864189597697507
-
-14 [C , J , G , A , F , E , N , D , H , B , K , L , I , M ]
-Distance 3.913797736872241
-
-15 [C , J , G , A , F , E , N , D , B , H , L , K , I , M ]
-Distance 3.9429717895980687
-
-16 [C , J , G , A , F , E , N , D , H , B , K , I , L , M ]
-Distance 3.7167858994441634
-
-17 [C , J , G , A , F , N , E , D , H , B , K , I , L , M ]
-Distance 3.8638659297623335
-
-18 [H , B , D , N , F , E , A , M , G , J , C , L , I , K ]
-Distance 3.8966294778429185
-
-19 [C , J , G , A , F , E , N , D , B , H , I , K , L , M ]
-Distance 3.885079392569626
-
-20 [C , J , G , A , F , E , N , D , B , H , K , I , L , M ]
-Distance 3.689407122341673
-
-21 [F , E , N , D , B , H , K , I , L , C , M , J , G , A ]
-Distance 3.9078882107596087
-
-22 [F , E , N , D , B , H , K , L , I , C , M , J , G , A ]
-Distance 3.9938175574305275
-
-23 [F , E , N , D , B , H , K , I , L , M , J , C , G , A ]
-Distance 3.8162317598280184
-
-24 [F , E , N , D , B , H , I , K , L , M , C , J , G , A ]
-Distance 3.8850793925696268
-
-25 [E , F , N , D , B , H , I , K , L , M , C , J , G , A ]
-Distance 3.9202987245358987
-
-26 [F , E , N , D , B , H , K , I , L , C , G , J , M , A ]
-Distance 3.969517867650486
-
-27 [F , E , N , D , B , H , K , L , I , C , J , G , M , A ]
-Distance 3.947339492547565
-
-28 [F , E , N , D , B , H , K , I , L , M , G , J , C , A ]
-Distance 3.9258338291628117
-
-29 [F , E , N , D , B , H , K , I , L , M , G , C , J , A ]
-Distance 3.9845916280637637
-
-30 [F , E , N , D , B , H , L , K , I , M , C , J , G , A ]
-Distance 3.9429717895980696
-
-31 [E , F , N , D , B , H , K , I , L , C , J , M , G , A ]
-Distance 3.961824458438387
-
-32 [F , E , N , D , B , H , K , I , L , C , J , G , M , A ]
-Distance 3.8614101458766465
-
-33 [F , E , N , D , B , H , K , I , L , M , C , J , G , A ]
-Distance 3.689407122341673
-
-34 [F , E , N , D , B , H , K , L , I , M , C , J , G , A ]
-Distance 3.8864189597697507
-
-35 [E , F , N , D , B , H , K , I , L , G , J , C , M , A ]
-Distance 3.9890078874015873
-
-36 [F , E , N , D , B , H , K , I , L , J , C , M , G , A ]
-Distance 3.9797029156892645
-
-37 [F , E , N , D , B , H , K , I , L , M , C , G , J , A ]
-Distance 3.965874712351258
-
-38 [F , E , N , D , H , B , K , I , L , C , J , G , M , A ]
-Distance 3.8887889229791375
-
-39 [F , E , N , D , H , B , I , K , L , M , C , J , G , A ]
-Distance 3.896039307592062
-
-40 [F , E , N , D , B , H , K , I , L , G , J , C , M , A ]
-Distance 3.9537885554353154
-
-41 [F , E , N , D , H , B , K , L , I , C , J , G , M , A ]
-Distance 3.9747182696500563
-
-42 [F , A , N , D , B , H , K , L , I , C , J , G , M , E ]
-Distance 3.9921586977239754
-
-43 [E , F , N , D , B , H , K , I , L , M , J , C , G , A ]
-Distance 3.8514510917942903
-
-44 [F , E , N , D , H , B , K , I , L , C , J , M , G , A ]
-Distance 3.9539839035746054
-
-45 [F , E , N , D , B , H , K , I , L , C , J , M , G , A ]
-Distance 3.926605126472115
-
-46 [F , E , N , D , H , B , K , I , L , C , M , J , G , A ]
-Distance 3.9352669878621
-
-47 [E , F , N , D , B , H , K , I , L , M , G , J , C , A ]
-Distance 3.9610531611290836
-
-48 [E , F , N , D , B , H , K , I , L , M , C , J , G , A ]
-Distance 3.724626454307945
-
-49 [E , F , N , D , B , H , K , I , L , C , M , J , G , A ]
-Distance 3.9431075427258806
-
-50 [F , N , E , D , B , H , K , I , L , M , C , J , G , A ]
-Distance 3.836487152659844
-
-Mean: 7.451856980031576
-Standard Deviation: 0.9417750486526945
-Shortest Route: [C , J , G , A , F , E , N , D , B , H , K , I , L , M ]
-Shortest distance: 3.689407122341673
-Longest Route: [I , E , J , D , C , H , G , B , M , N , L , F , K , A ]
-Longest distance: 11.414370379267426
+Mean: 3.9666830447129557
+Standard Deviation: 0.11034983120257567
+Shortest Route: [B , K , I , L , M , C , J , G , A , F , E , N , D , H ]
+Shortest distance: 3.7167858994441643
+Longest Route: [D , H , K , I , L , C , J , G , M , F , N , A , E , B ]
+Longest distance: 4.3244338492254695
 
 0.86-1	0
 1-1.14	0
@@ -174,12 +75,12 @@ Longest distance: 11.414370379267426
 3.1-3.24	0
 3.24-3.38	0
 3.38-3.52	0
-3.52-3.66	23766
-3.66-3.8	970076
-3.8-3.93	4837332
-3.93-4.07	6691236
-4.07-4.21	0
-4.21-4.35	0
+3.52-3.66	0
+3.66-3.8	128
+3.8-3.93	629
+3.93-4.07	1164
+4.07-4.21	12
+4.21-4.35	4
 4.35-4.49	0
 4.49-4.63	0
 4.63-4.77	0
@@ -256,4 +157,4 @@ Longest distance: 11.414370379267426
 14.55-14.69	0
 14.69-14.83	0
 
-Runtime: 21477 milliseconds
+Runtime: 490290 milliseconds
